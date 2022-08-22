@@ -2,10 +2,11 @@
   <div>
     <li>
       <label>
-        <input type="checkbox" :checked="todo.done" />
-        <span>{{todo.title}}</span>
+        <!-- change 改变,当内容改变时触发 -->
+        <input type="checkbox" :checked="todo.done" @change="qvfan(todo.id)" />
+        <span>{{ todo.title }}</span>
       </label>
-      <button class="btn btn-danger" style="display: none">删除</button>
+      <button class="btn btn-danger" @click="todoDelete">删除</button>
     </li>
   </div>
 </template>
@@ -14,10 +15,20 @@
 export default {
   name: "MyItem",
   //用props接收list那边传出来的外部内容.props只能父子传递（嵌套）
-  props:['todo'],
-  mounted(){
-    console.log(this.todo);
-  }
+  props: ["todo", "checkTodo"],
+  methods: {
+    qvfan(id) {
+      console.log(id);
+      //通知App组件将对应得done值取反
+      this.checkTodo(id);
+    },
+    todoDelete(id){
+      // confirm根据用户的交互觉得布尔值为真还是假
+      if(confirm('你确定删除吗？')){
+        console.log(id);
+      }
+    }
+  },
 };
 </script>
 
@@ -55,5 +66,13 @@ li:before {
 
 li:last-child {
   border-bottom: none;
+}
+
+li:hover{
+  background-color: rgb(228, 228, 228);
+}
+
+li:hover button{
+  display: block;
 }
 </style>
