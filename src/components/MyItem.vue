@@ -6,7 +6,7 @@
         <input type="checkbox" :checked="todo.done" @change="qvfan(todo.id)" />
         <span>{{ todo.title }}</span>
       </label>
-      <button class="btn btn-danger" @click="todoDelete">删除</button>
+      <button class="btn btn-danger" @click="todoDelete(todo.id)">删除</button>
     </li>
   </div>
 </template>
@@ -15,7 +15,7 @@
 export default {
   name: "MyItem",
   //用props接收list那边传出来的外部内容.props只能父子传递（嵌套）
-  props: ["todo", "checkTodo"],
+  props: ["todo", "checkTodo",'deleteTodo'],
   methods: {
     qvfan(id) {
       console.log(id);
@@ -25,7 +25,7 @@ export default {
     todoDelete(id){
       // confirm根据用户的交互觉得布尔值为真还是假
       if(confirm('你确定删除吗？')){
-        console.log(id);
+        this.deleteTodo(id)
       }
     }
   },

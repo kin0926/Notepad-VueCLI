@@ -3,7 +3,7 @@
     <div class="todo-container">
       <div class="todo-wrap">
         <MyHeader :addTodo="addTodo"></MyHeader>
-        <MyList :todos="todos" :checkTodo="checkTodo"></MyList>
+        <MyList :todos="todos" :checkTodo="checkTodo" :deleteTodo="deleteTodo"></MyList>
         <MyFooter></MyFooter>
       </div>
     </div>
@@ -37,17 +37,24 @@ export default {
     //添加一个todo
     addTodo(x) {
       console.log("App.vue收到了数据：" + x);
-      this.todos.unshift(x)
+      this.todos.unshift(x);
     },
     //取反对应todo
-    checkTodo(id){
+    checkTodo(id) {
       // forEach遍历
-      this.todos.forEach((todo)=>{
-        if(todo.id === id){
-          todo.done = !todo.done
+      this.todos.forEach((todo) => {
+        if (todo.id === id) {
+          todo.done = !todo.done;
         }
-      })
-    }
+      });
+    },
+    // 删除一个todo
+    deleteTodo(id) {
+      // filter过滤
+      this.todos = this.todos.filter((todo) => {
+        return todo.id !== id;
+      });
+    },
   },
 };
 </script>
