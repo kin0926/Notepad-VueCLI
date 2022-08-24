@@ -3,8 +3,16 @@
     <div class="todo-container">
       <div class="todo-wrap">
         <MyHeader :addTodo="addTodo"></MyHeader>
-        <MyList :todos="todos" :checkTodo="checkTodo" :deleteTodo="deleteTodo"></MyList>
-        <MyFooter :todos="todos" :checkAllTodo="checkAllTodo" :clearAllTodo="clearAllTodo"></MyFooter>
+        <MyList
+          :todos="todos"
+          :checkTodo="checkTodo"
+          :deleteTodo="deleteTodo"
+        ></MyList>
+        <MyFooter
+          :todos="todos"
+          :checkAllTodo="checkAllTodo"
+          :clearAllTodo="clearAllTodo"
+        ></MyFooter>
       </div>
     </div>
   </div>
@@ -26,11 +34,14 @@ export default {
   },
   data() {
     return {
-      todos: [
-        { id: "001", title: "吃饭", done: true },
-        { id: "002", title: "学习", done: false },
-        { id: "003", title: "唱歌", done: true },
-      ],
+      // todos: [
+      //   { id: "001", title: "请输入内容并回车", done: false },
+      //   JSON.parse(localStorage.getItem("todos")),
+      // ],
+
+      //监听事件里把历史事件存到本地存储里了，这里调用本地存储以实现记事本内容不随刷新而消失
+      //第一次使用时没有内容，可以在后面添加个‘ || [] ’空数组
+      todos: JSON.parse(localStorage.getItem("todos")) || []
     };
   },
   methods: {
@@ -56,17 +67,26 @@ export default {
       });
     },
     //全选or全不选
-    checkAllTodo(done){
-      this.todos.forEach((todo)=>{
-        todo.done = done
-      })
+    checkAllTodo(done) {
+      this.todos.forEach((todo) => {
+        todo.done = done;
+      });
     },
     //清除所有已完成的todo
-    clearAllTodo(){
+    clearAllTodo() {
       // filter过滤
-      this.todos = this.todos.filter((todo)=>{
-        return !todo.done
-      })
+      this.todos = this.todos.filter((todo) => {
+        return !todo.done;
+      });
+    },
+  },
+  watch: {
+    //简写的话只能浅监视，这里得用完整写法+deep:true开启深度监视，才能知道事件前面的框是否勾选‘完成’
+    todos:{
+      deep:true,
+      handler(value){
+        localStorage.setItem("todos", JSON.stringify(value));
+        }
     }
   },
 };
