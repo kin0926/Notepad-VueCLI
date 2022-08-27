@@ -15,17 +15,19 @@
 export default {
   name: "MyItem",
   //用props接收list那边传出来的外部内容.props只能父子传递（嵌套）
-  props: ["todo", "checkTodo",'deleteTodo'],
+  props: ["todo"],
   methods: {
     qvfan(id) {
       console.log(id);
       //通知App组件将对应得done值取反
-      this.checkTodo(id);
+      // this.checkTodo(id);
+      this.$bus.$emit('checkTodo',id)
     },
     todoDelete(id){
       // confirm根据用户的交互觉得布尔值为真还是假
       if(confirm('你确定删除吗？')){
-        this.deleteTodo(id)
+        // this.deleteTodo(id)
+        this.$bus.$emit('deleteTodo',id)
       }
     }
   },

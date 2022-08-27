@@ -3,11 +3,7 @@
     <div class="todo-container">
       <div class="todo-wrap">
         <MyHeader @addTodo="addTodo"></MyHeader>
-        <MyList
-          :todos="todos"
-          :checkTodo="checkTodo"
-          :deleteTodo="deleteTodo"
-        ></MyList>
+        <MyList :todos="todos"></MyList>
         <MyFooter
           :todos="todos"
           @checkAllTodo="checkAllTodo"
@@ -89,6 +85,16 @@ export default {
         }
     }
   },
+  mounted(){
+    // 只要加载完毕就找到bus这个事件总线，on绑定上去
+    this.$bus.$on('checkTodo',this.checkTodo)
+    this.$bus.$on('deleteTodo',this.deleteTodo)
+  },
+  beforeDestroy(){
+    // bus销毁时解绑上面那两个
+    this.$bus.$off('checkTodo')
+    this.$bus.$off('deleteTodo')
+  }
 };
 </script>
 
