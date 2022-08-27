@@ -2,7 +2,7 @@
   <div id="root">
     <div class="todo-container">
       <div class="todo-wrap">
-        <MyHeader :addTodo="addTodo"></MyHeader>
+        <MyHeader @addTodo="addTodo"></MyHeader>
         <MyList
           :todos="todos"
           :checkTodo="checkTodo"
@@ -10,8 +10,8 @@
         ></MyList>
         <MyFooter
           :todos="todos"
-          :checkAllTodo="checkAllTodo"
-          :clearAllTodo="clearAllTodo"
+          @checkAllTodo="checkAllTodo"
+          @clearAllTodo="clearAllTodo"
         ></MyFooter>
       </div>
     </div>
@@ -46,9 +46,9 @@ export default {
   },
   methods: {
     //添加一个todo
-    addTodo(x) {
-      console.log("App.vue收到了数据：" + x);
-      this.todos.unshift(x);
+    addTodo(todoObj) {
+      console.log("App.vue收到了数据：" + todoObj);
+      this.todos.unshift(todoObj);
     },
     //取反对应todo
     checkTodo(id) {

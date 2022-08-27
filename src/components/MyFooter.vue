@@ -13,7 +13,7 @@
 <script>
 export default {
   name: "MyFooter",
-  props:['todos','checkAllTodo','clearAllTodo'],
+  props:['todos'],
   computed:{
     tatle(){
       return this.todos.length
@@ -34,11 +34,11 @@ export default {
   methods:{
     // 全选or取消全选
       checkAll(e){
-        this.checkAllTodo(e.target.checked)
+        this.$emit('checkAllTodo',e.target.checked)
       },
       //清空
       clearAll(){
-        this.clearAllTodo()
+        this.$emit('clearAllTodo')
       }
     }
 };

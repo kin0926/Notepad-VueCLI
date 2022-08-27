@@ -17,7 +17,6 @@ import { nanoid } from "nanoid";
 
 export default {
   name: "MyHeader",
-  props:['addTodo'],
   data() {
     return {
       title:''
@@ -30,9 +29,9 @@ export default {
       // console.log(e.target.value);
       // uuid的精简版nanoid,安装npm i nanoid
       // 将用户输入的内容包装成一个todo对象
-      let todoObj = { id: nanoid(), title: this.title, done: false };
-      // 通知App组件添加一个todoObj对象
-      this.addTodo(todoObj);
+      const todoObj = { id: nanoid(), title: this.title, done: false };
+      // 第一个是绑定的事件，第二个是要的数据,即绑定谁的什么什么数据
+      this.$emit('addTodo',todoObj)
       // 清空输入框
       this.title=''
     },
