@@ -62,6 +62,13 @@ export default {
         return todo.id !== id;
       });
     },
+    // 更新编辑后todo
+    updateTodo(id,title){
+      this.todos.forEach((todo) => {
+        if (todo.id === id) {todo.title = title;}
+      });
+      
+    },
     //全选or全不选
     checkAllTodo(done) {
       this.todos.forEach((todo) => {
@@ -89,11 +96,13 @@ export default {
     // 只要加载完毕就找到bus这个事件总线，on绑定上去
     this.$bus.$on('checkTodo',this.checkTodo)
     this.$bus.$on('deleteTodo',this.deleteTodo)
+    this.$bus.$on('updateTodo',this.updateTodo)
   },
   beforeDestroy(){
-    // bus销毁时解绑上面那两个
+    // bus销毁时-解绑-上面那两个
     this.$bus.$off('checkTodo')
     this.$bus.$off('deleteTodo')
+    this.$bus.$off('updateTodo')
   }
 };
 </script>
@@ -122,6 +131,13 @@ body {
   color: #fff;
   background-color: #da4f49;
   border: 1px solid #bd362f;
+}
+
+.btn-edit{
+  color: #fff;
+  background-color: #2c8630;
+  border: 1px solid #000000;
+  margin-right: 7px;
 }
 
 .btn-danger:hover {
